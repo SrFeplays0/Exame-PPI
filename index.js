@@ -76,7 +76,7 @@ function cadastroUsuario(requisicao, resposta) {
     }
 }
 
-app.post('/cadastroUsuario.html', cadastroUsuario);
+app.post('/cadastroUsuario', cadastroUsuario);
 
 
 app.listen(porta, host, () => {
