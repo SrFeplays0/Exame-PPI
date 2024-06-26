@@ -39,7 +39,7 @@ function cadastroUsuario(requisicao, resposta) {
         <form action="/cadastroUsuario.html" method="POST">
             <div class="form-group">
                 <label for="nome">Nome:</label>
-                <input type="text" id="nome" name="nome">`);
+                <input type="text" id="nome" name="nome" value="${nome}">`);
         if (nome == "") {
             resposta.write(`
                 <div class="alert" id="alert">Por favor, informe o nome de usuario.</div>
@@ -49,7 +49,7 @@ function cadastroUsuario(requisicao, resposta) {
             </div>
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email">`)
+                <input type="email" id="email" name="email" value="${email}">`)
         if (email == "") {
             resposta.write(`
                 <div class="alert" id="alert">Por favor, informe o email.</div>
@@ -59,7 +59,7 @@ function cadastroUsuario(requisicao, resposta) {
             </div>
             <div class="form-group">
                 <label for="senha">Senha:</label>
-                <input type="password" id="senha" name="senha">`)
+                <input type="password" id="senha" name="senha" value="${senha}">`)
         if (senha == "") {
             resposta.write(`
                 <div class="alert" id="alert">Por favor, informe a senha.</div>
