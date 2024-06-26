@@ -10,7 +10,7 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(process.cwd(), ' publico')));
+app.use(express.static(path.join(process.cwd(), 'publico')));
 
 function cadastroUsuario(requisicao, resposta) {
     const nome = requisicao.body.nome;
@@ -76,7 +76,7 @@ function cadastroUsuario(requisicao, resposta) {
     }
 }
 
-app.post('/cadastroUsuario', cadastroUsuario);;
+app.post('/cadastroUsuario', cadastroUsuario);
 
 
 app.listen(porta, host, () => {
