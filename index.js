@@ -1,3 +1,4 @@
+import path from 'path';
 import express from 'express';
 
 const porta = 3000;
@@ -9,7 +10,7 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 
-app.use(express.static(path.join(process.cwd(), 'publico')));
+app.use(express.static(path.join(process.cwd(), ' publico')));
 
 function cadastroUsuario(requisicao, resposta) {
     const nome = requisicao.body.nome;
