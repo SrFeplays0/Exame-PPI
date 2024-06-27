@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/SrFeplays0/Exame-ppi#readme",
   "dependencies": {
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "express-session": "^1.18.0"
   }
 }

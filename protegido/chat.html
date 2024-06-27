@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat de Conversa</title>
+    <link rel="stylesheet" href="chatStyle.css">
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Chat de Conversa</h2>
+        </div>
+        <div class="chat-window">
+            <div class="messages">
+            </div>
+        </div>
+        <div class="chat-input">
+            <form id="chatForm">
+                <select id="recipient" name="recipient">
+                </select>
+                <input type="text" id="message" name="message" placeholder="Digite sua mensagem aqui">
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/chat.js"></script>
+</body>
+</html>
