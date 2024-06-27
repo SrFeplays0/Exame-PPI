@@ -1,6 +1,7 @@
 import path from 'path';
 import express from 'express';
 import session from 'express-session';
+import cookieParser from 'cookie-parser'; // Adiciona o cookie-parser
 
 const porta = 3000;
 const host = '0.0.0.0';
@@ -11,6 +12,7 @@ let listaMensagens = [];
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser()); // Configura o cookie-parser
 
 app.use(session({
     secret: 'MinH4CH4v3S3cr3t4',
@@ -86,7 +88,9 @@ function autenticarUsuario(requisicao, resposta) {
     const senha = requisicao.body.senha;
     if (usuario === 'admin' && senha === '123456') {
         requisicao.session.usuarioAutenticado = true;
-        requisicao.session.ultimoAcesso = new Date().toLocaleString();
+        const agora = new Date().toLocaleString();
+        requisicao.cookies.ultimoAcesso = requisicao.cookies.ultimoAcesso || agora; // Mantém o último acesso anterior
+        resposta.cookie('ultimoAcesso', agora, { maxAge: 1000 * 60 * 15 }); // Atualiza o último acesso
         resposta.redirect('/');
     } else {
         resposta.write('<!DOCTYPE html>');
@@ -112,7 +116,8 @@ app.get('/login', (req, resp) => {
 });
 
 app.get('/logout', (req, resp) => {
-    const ultimoAcesso = req.session.ultimoAcesso;
+    const ultimoAcesso = req.cookies.ultimoAcesso;
+    resp.clearCookie('ultimoAcesso');
     req.session.destroy();
     resp.send(renderLogoutPage(ultimoAcesso));
 });
@@ -129,7 +134,7 @@ function renderLogoutPage(ultimoAcesso) {
     <body>
         <h1>Logout</h1>
         <p>Você saiu do sistema.</p>
-        <p>Último acesso: ${ultimoAcesso}</p>
+        <p>Último acesso: ${ultimoAcesso || 'N/A'}</p>
         <button onclick="window.location.href='/login.html'">Login</button>
     </body>
     </html>`;
