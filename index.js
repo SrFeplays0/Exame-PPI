@@ -17,7 +17,7 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     cookie: {
-        maxAge: 1000 * 60 * 30
+        maxAge: 1000 * 60 * 15
     }
 }));
 
@@ -86,6 +86,7 @@ function autenticarUsuario(requisicao, resposta) {
     const senha = requisicao.body.senha;
     if (usuario === 'admin' && senha === '123456') {
         requisicao.session.usuarioAutenticado = true;
+        requisicao.session.ultimoAcesso = new Date().toLocaleString();
         resposta.redirect('/');
     } else {
         resposta.write('<!DOCTYPE html>');
@@ -111,9 +112,28 @@ app.get('/login', (req, resp) => {
 });
 
 app.get('/logout', (req, resp) => {
+    const ultimoAcesso = req.session.ultimoAcesso;
     req.session.destroy();
-    resp.redirect('/login.html');
+    resp.send(renderLogoutPage(ultimoAcesso));
 });
+
+function renderLogoutPage(ultimoAcesso) {
+    return `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Logout</title>
+    </head>
+    <body>
+        <h1>Logout</h1>
+        <p>Você saiu do sistema.</p>
+        <p>Último acesso: ${ultimoAcesso}</p>
+        <button onclick="window.location.href='/login.html'">Login</button>
+    </body>
+    </html>`;
+}
 
 app.use(express.static(path.join(process.cwd(), 'publico')));
 
